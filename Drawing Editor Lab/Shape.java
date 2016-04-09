@@ -5,10 +5,10 @@ import java.awt.Graphics2D;
 public abstract class Shape
 {
     private Point2D.Double centerPoint;
-    private int radius;
+    public double radius;
     private Color shapeColor;
     
-    private Shape(Point2D.Double centerPoint, int radius, Color shapeColor)
+    public Shape(Point2D.Double centerPoint, double radius, Color shapeColor)
     {
         this.centerPoint = centerPoint;
         this.radius = radius;
@@ -25,9 +25,14 @@ public abstract class Shape
         return this.centerPoint;
     }
     
-    public int getRadius()
+    public double getRadius()
     {
         return this.radius;
+    }
+    
+    public void setRadius(double r)
+    {
+        this.radius = r;
     }
     
     public Color getColor()
@@ -35,7 +40,8 @@ public abstract class Shape
         return this.shapeColor;
     }
     
-    abstract boolean isInsideBorder(Point2D.Double point);
+    abstract boolean isInside(Point2D.Double point);
     
-    abstract void draw(Graphics2D g2);
+    abstract void draw(Graphics2D g2, boolean filled);
+    
 }

@@ -14,6 +14,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.*;
 import javax.swing.JDialog;
 import javax.swing.JColorChooser;
+import java.awt.geom.Point2D;
 
 public class DrawingPanel extends JPanel
 {
@@ -22,16 +23,23 @@ public class DrawingPanel extends JPanel
     private JColorChooser colorChooser;
     private JDialog title;
     private Color currentColor;
+    private Dimension size;
+    private int active;
     
     public DrawingPanel()
     {
-        shapes = new ArrayList<Shape>();
+        this.shapes = new ArrayList<Shape>();
         addMouseListener(new ClickListener());
         addMouseMotionListener(new MotionListener());
         setBackground(Color.WHITE);
-        this.colorChooser = new JColorChooser();
-        this.title = JColorChooser.createDialog(new JFrame(), "Drawing Editor", true, this.colorChooser, new okListener(), new cancelListener());
+        JFrame frame = new JFrame();
+        frame.setSize(300,300);
+        this.size = new Dimension(400,400);
         
+        
+        this.colorChooser = new JColorChooser();
+        this.title = JColorChooser.createDialog(frame, "Drawing Editor", true, this.colorChooser, new OkListener(), new CancelListener());
+        setFocusable(true);
         
     }
     
@@ -48,26 +56,29 @@ public class DrawingPanel extends JPanel
         return this.currentColor;
     }
     
-    //public Shape getPreferredSize()
-    //{
-    //}
     
     public void addCircle()
     {
+       Circle circle = new Circle(new Point2D.Double(size.getWidth()/2, size.getHeight()/2),50,getColor());
+       this.shapes.add(circle);
+       
+       this.active = shapes.indexOf(circle);
+       
+       repaint();
     }
     
     public void addSquare()
     {
+        Square square = new Square(new Point2D.Double(size.getWidth()/2,size.getHeight()/2),50,getColor());
+        this.shapes.add(square);
+        this.active = shapes.indexOf(square);
+        repaint();
     }
     
-    //public void paintComponent(Graphics g)
-    //{
-    //}
-    
-    //public void mouseClicked(MouseEvent event)
-    //{
-    //    Point2D.Double clickPosition = new Point2D.Double(event.getX(),event.getY());
-    //}
+    public Dimension getPreferredSize()
+    {
+        return this.size;
+    }
     
     public class ClickListener implements MouseListener
     {
@@ -81,7 +92,16 @@ public class DrawingPanel extends JPanel
         
         public void mousePressed(MouseEvent event)
         {
+            requestFocusInWindow();
+            Point2D.Double point = new Point2D.Double(event.getX(),event.getY());
             
+            for (int i = shapes.size()-1;i>=0;i--)
+            {
+                if (shapes.get(i).isInside(point))
+                {
+                    active = i;
+                }
+            }
         }
         
         public void mouseEntered(MouseEvent event)
@@ -98,7 +118,8 @@ public class DrawingPanel extends JPanel
     {
         public void mouseDragged(MouseEvent event)
         {
-            
+            shapes.get(active).move(event.getX(),event.getY());
+            repaint();
         }
         
         public void mouseMoved(MouseEvent event)
@@ -107,7 +128,7 @@ public class DrawingPanel extends JPanel
     }
     
     
-    public class okListener implements ActionListener
+    public class OkListener implements ActionListener
     {
         public void actionPerformed(ActionEvent event)
         {
@@ -116,7 +137,7 @@ public class DrawingPanel extends JPanel
     
     }
     
-    public class cancelListener implements ActionListener
+    public class CancelListener implements ActionListener
     {
         public void actionPerformed(ActionEvent event)
         {

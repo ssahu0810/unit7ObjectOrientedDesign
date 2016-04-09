@@ -47,11 +47,11 @@ public class ControlPanel extends JPanel
             }
             else if (event.getSource() == button2)
             {
-                System.out.println("Button 2 was pressed");
+                canvas1.addCircle();
             }
             else if (event.getSource() == button3)
             {
-                System.out.println("Button 3 was pressed");
+                canvas1.addSquare();
             }
         }
     }
