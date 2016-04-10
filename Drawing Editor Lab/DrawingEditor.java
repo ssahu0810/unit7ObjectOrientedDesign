@@ -15,18 +15,15 @@ public class DrawingEditor extends JFrame
     
     public DrawingEditor()
     {
-        canvas = new DrawingPanel();
-        controls = new ControlPanel(canvas);
+        this.setTitle("Drawing Editor");
+        this.setSize(FRAME_WIDTH,FRAME_HEIGHT);
+        this.canvas = new DrawingPanel();
+        this.controls = new ControlPanel(canvas);
         
         this.add(controls, BorderLayout.SOUTH);
         this.add(canvas, BorderLayout.CENTER);
         
         
-        this.setTitle("Drawing Editor");
-        this.setSize(FRAME_WIDTH,FRAME_HEIGHT);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
-    
     
     }
     public static void main(String[] args)
