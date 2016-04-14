@@ -16,7 +16,11 @@ public class Circle extends Shape
     
     public boolean isInside(Point2D.Double point)
     {
-        this.circle = new Ellipse2D.Double(super.getCenter().getX() - super.getRadius(),super.getCenter().getY()-super.getRadius(), 2*super.getRadius(),2*super.getRadius());
+        this.circle = new Ellipse2D.Double(super.getCenter().getX() - super.getRadius(),
+        super.getCenter().getY()-super.getRadius(),
+        2*super.getRadius(),
+        2*super.getRadius());
+        
         return this.circle.contains(point);    
     }
     
@@ -34,6 +38,22 @@ public class Circle extends Shape
         if (!filled)
         {
             g2.fill(this.circle);
+        }
+    }
+    
+    public boolean isOnBorder(Point2D.Double point)
+    {
+        this.circle = new Ellipse2D.Double(super.getCenter().getX() - super.getRadius(),super.getCenter().getY()-super.getRadius(), 2*super.getRadius(),2*super.getRadius());
+        
+        Ellipse2D.Double circle2 = new Ellipse2D.Double(super.getCenter().getX() - super.getRadius(),super.getCenter().getY()-super.getRadius(), 1.85*super.getRadius(),1.85*super.getRadius());
+        
+        if (this.circle.contains(point) && !circle2.contains(point))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

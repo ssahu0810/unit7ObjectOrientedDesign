@@ -25,7 +25,7 @@ public class DrawingPanel extends JPanel
     private Color currentColor;
     private Dimension size;
     private int active;
-    
+
     public DrawingPanel()
     {
         this.shapes = new ArrayList<Shape>();
@@ -35,38 +35,41 @@ public class DrawingPanel extends JPanel
         JFrame frame = new JFrame();
         frame.setSize(300,300);
         this.size = new Dimension(400,400);
-        
-        
+
         this.colorChooser = new JColorChooser();
         this.title = JColorChooser.createDialog(frame, "Drawing Editor", true, this.colorChooser, new OkListener(), new CancelListener());
         setFocusable(true);
-        
+
     }
-    
+
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;         
+        Graphics2D g2 = (Graphics2D) g;
+
+        if(!(this.shapes.isEmpty()))
+        {
+            for (int i=shapes.size()-1;i>=0;i--)
+            {
+                this.shapes.get(i).draw(g2,(active==i));
+            }
+        }
     }
-        
-    
+
         
     public Color getColor()
     {
         return this.currentColor;
     }
-    
-    
+
     public void addCircle()
     {
-       Circle circle = new Circle(new Point2D.Double(size.getWidth()/2, size.getHeight()/2),50,getColor());
-       this.shapes.add(circle);
-       
-       this.active = shapes.indexOf(circle);
-       
-       repaint();
+        Circle circle = new Circle(new Point2D.Double(size.getWidth()/2, size.getHeight()/2),50,getColor());
+        this.shapes.add(circle);
+        this.active = shapes.indexOf(circle);
+        repaint();
     }
-    
+
     public void addSquare()
     {
         Square square = new Square(new Point2D.Double(size.getWidth()/2,size.getHeight()/2),50,getColor());
@@ -74,27 +77,27 @@ public class DrawingPanel extends JPanel
         this.active = shapes.indexOf(square);
         repaint();
     }
-    
+
     public Dimension getPreferredSize()
     {
         return this.size;
     }
-    
+
     public class ClickListener implements MouseListener
     {
         public void mouseClicked(MouseEvent event)
         {
         }
-        
+
         public void mouseReleased(MouseEvent event)
         {
         }
-        
+
         public void mousePressed(MouseEvent event)
         {
             requestFocusInWindow();
             Point2D.Double point = new Point2D.Double(event.getX(),event.getY());
-            
+
             for (int i = shapes.size()-1;i>=0;i--)
             {
                 if (shapes.get(i).isInside(point))
@@ -103,54 +106,64 @@ public class DrawingPanel extends JPanel
                 }
             }
         }
-        
+
         public void mouseEntered(MouseEvent event)
         {
         }
-        
+
         public void mouseExited(MouseEvent event)
         {
         }
-        
+
     }
-    
+
     public class MotionListener implements MouseMotionListener
     {
         public void mouseDragged(MouseEvent event)
         {
+            requestFocusInWindow();
+            Point2D.Double point = new Point2D.Double(event.getX(),event.getY());
             shapes.get(active).move(event.getX(),event.getY());
+            /**
+            for (int i = shapes.size()-1;i>=0;i--)
+            {
+                if (shapes.get(i).isOnBorder(point))
+                {
+                    int dist = (int)Math.sqrt((point.getX()-event.getX())*(point.getX()-event.getX())+(point.getY()-event.getY())*(point.getY()-event.getY()));
+                    shapes.get(i).setRadius(dist);
+                }
+            }
+            **/
             repaint();
         }
-        
+
         public void mouseMoved(MouseEvent event)
         {
         }
     }
-    
-    
+
     public class OkListener implements ActionListener
     {
         public void actionPerformed(ActionEvent event)
         {
             currentColor = colorChooser.getColor();
         }
-    
+
     }
-    
+
     public class CancelListener implements ActionListener
     {
         public void actionPerformed(ActionEvent event)
         {
             title.setVisible(false);
         }
-    
+
     }
-    
+
     public void pickColor()
     {
         title.setVisible(true);
     }
-    
-    
+
     
 }

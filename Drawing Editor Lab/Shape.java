@@ -42,6 +42,8 @@ public abstract class Shape
     
     abstract boolean isInside(Point2D.Double point);
     
+    abstract boolean isOnBorder(Point2D.Double point);
+    
     abstract void draw(Graphics2D g2, boolean filled);
     
 }
