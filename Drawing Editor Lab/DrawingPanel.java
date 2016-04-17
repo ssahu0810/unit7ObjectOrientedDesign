@@ -124,16 +124,7 @@ public class DrawingPanel extends JPanel
             requestFocusInWindow();
             Point2D.Double point = new Point2D.Double(event.getX(),event.getY());
             shapes.get(active).move(event.getX(),event.getY());
-            /**
-            for (int i = shapes.size()-1;i>=0;i--)
-            {
-                if (shapes.get(i).isOnBorder(point))
-                {
-                    int dist = (int)Math.sqrt((point.getX()-event.getX())*(point.getX()-event.getX())+(point.getY()-event.getY())*(point.getY()-event.getY()));
-                    shapes.get(i).setRadius(dist);
-                }
-            }
-            **/
+            
             repaint();
         }
 
