@@ -26,6 +26,10 @@ public class DrawingPanel extends JPanel
     private Dimension size;
     private int active;
 
+    /**
+     * DrawingPanel Constructor
+     *
+     */
     public DrawingPanel()
     {
         this.shapes = new ArrayList<Shape>();
@@ -42,6 +46,11 @@ public class DrawingPanel extends JPanel
 
     }
 
+    /**
+     * takes care of multiple shapes and stuff
+     *
+     * @param g Graphics object
+     */
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
@@ -57,11 +66,20 @@ public class DrawingPanel extends JPanel
     }
 
         
+    /**
+     * returns color
+     *
+     * @return color
+     */
     public Color getColor()
     {
         return this.currentColor;
     }
 
+    /**
+     * Adds a circle onto the canvas
+     *
+     */
     public void addCircle()
     {
         Circle circle = new Circle(new Point2D.Double(size.getWidth()/2, size.getHeight()/2),50,getColor());
@@ -70,6 +88,10 @@ public class DrawingPanel extends JPanel
         repaint();
     }
 
+    /**
+     * Adds a square onto the canvas
+     *
+     */
     public void addSquare()
     {
         Square square = new Square(new Point2D.Double(size.getWidth()/2,size.getHeight()/2),50,getColor());
@@ -78,6 +100,11 @@ public class DrawingPanel extends JPanel
         repaint();
     }
 
+    /**
+     * lol idk what this does
+     *
+     * @return dimension
+     */
     public Dimension getPreferredSize()
     {
         return this.size;
@@ -93,6 +120,11 @@ public class DrawingPanel extends JPanel
         {
         }
 
+        /**
+         * registers when the mouse presses a shape
+         *
+         * @param event the clicking event
+         */
         public void mousePressed(MouseEvent event)
         {
             requestFocusInWindow();
@@ -105,6 +137,8 @@ public class DrawingPanel extends JPanel
                     active = i;
                 }
             }
+            
+            repaint();
         }
 
         public void mouseEntered(MouseEvent event)
@@ -119,6 +153,11 @@ public class DrawingPanel extends JPanel
 
     public class MotionListener implements MouseMotionListener
     {
+        /**
+         * moves shapes when the mouse is dragged
+         *
+         * @param event dragging event
+         */
         public void mouseDragged(MouseEvent event)
         {
             requestFocusInWindow();
@@ -135,6 +174,11 @@ public class DrawingPanel extends JPanel
 
     public class OkListener implements ActionListener
     {
+        /**
+         * finalises color selection
+         *
+         * @param event mouse clicking event
+         */
         public void actionPerformed(ActionEvent event)
         {
             currentColor = colorChooser.getColor();
@@ -144,6 +188,11 @@ public class DrawingPanel extends JPanel
 
     public class CancelListener implements ActionListener
     {
+        /**
+         * cancels color choosing process
+         *
+         * @param event mouse clicking event
+         */
         public void actionPerformed(ActionEvent event)
         {
             title.setVisible(false);
@@ -151,6 +200,10 @@ public class DrawingPanel extends JPanel
 
     }
 
+    /**
+     * picks color
+     *
+     */
     public void pickColor()
     {
         title.setVisible(true);

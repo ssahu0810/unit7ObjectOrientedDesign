@@ -14,6 +14,11 @@ public class ControlPanel extends JPanel
     private DrawingPanel canvas1;
     private JPanel colorPanel;
     
+    /**
+     * ControlPanel Constructor
+     *
+     * @param canvas the canvas on which stuff is drawn on
+     */
     public ControlPanel(DrawingPanel canvas)
     {
         canvas1 = canvas;
@@ -38,6 +43,11 @@ public class ControlPanel extends JPanel
 
     public class ClickListener implements ActionListener
     {
+        /**
+         * chooses which buttons do what
+         *
+         * @param mouse clicking event 
+         */
         public void actionPerformed(ActionEvent event)
         {
             if (event.getSource() == button1)

@@ -13,6 +13,10 @@ public class DrawingEditor extends JFrame
     private DrawingPanel canvas;
     private ControlPanel controls;
     
+    /**
+     * DrawingEditor Constructor
+     *
+     */
     public DrawingEditor()
     {
         this.setTitle("Drawing Editor");
@@ -26,6 +30,13 @@ public class DrawingEditor extends JFrame
         
     
     }
+    
+    /**
+     * Method main
+     * does everythng
+     * 
+     * @param args lol idk what this does
+     */
     public static void main(String[] args)
     {
         JFrame frame = new DrawingEditor();

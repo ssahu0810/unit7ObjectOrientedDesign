@@ -8,12 +8,25 @@ public class Circle extends Shape
 {
     private Ellipse2D.Double circle;     
     
+    /**
+     * Circle Constructor
+     *
+     * @param centerPoint center of shape
+     * @param radius size of shape
+     * @param shapeColor shape color
+     */
     public Circle(Point2D.Double centerPoint, double radius, Color shapeColor)
     {
         super(centerPoint, radius, shapeColor);
         this.circle = new Ellipse2D.Double(centerPoint.getX() - radius, centerPoint.getY() - radius, radius*2, radius*2);
     }
     
+    /**
+     * determines if mouse is or is not inside shape
+     *
+     * @param point mouse point
+     * @return true or false
+     */
     public boolean isInside(Point2D.Double point)
     {
         this.circle = new Ellipse2D.Double(super.getCenter().getX() - super.getRadius(),
@@ -24,11 +37,22 @@ public class Circle extends Shape
         return this.circle.contains(point);    
     }
     
+    /**
+     * set shape's radius
+     *
+     * @param r radius dimension
+     */
     public void setRadius(double r)
     {
         this.radius = r;
     }
     
+    /**
+     * draws stuff based on object properties and filled or not
+     *
+     * @param g2 graphics object
+     * @param filled filled if the shape should be filled or not
+     */
     public void draw(Graphics2D g2, boolean filled)
     {
         this.circle = new Ellipse2D.Double(super.getCenter().getX()-super.getRadius(),super.getCenter().getY()-super.getRadius(),2*super.getRadius(),2*super.getRadius());
@@ -41,6 +65,12 @@ public class Circle extends Shape
         }
     }
     
+    /**
+     * determines if the mouse point is or is not near the shape border
+     *
+     * @param point mouse point
+     * @return true or false
+     */
     public boolean isOnBorder(Point2D.Double point)
     {
         this.circle = new Ellipse2D.Double(super.getCenter().getX() - super.getRadius(),super.getCenter().getY()-super.getRadius(), 2*super.getRadius(),2*super.getRadius());
